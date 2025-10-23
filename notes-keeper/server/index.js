@@ -3,6 +3,8 @@ require('dotenv').config();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require("cookie-parser");
+const userRouter = require('./routes/userRoutes');
+const notesRouter = require('./routes/notesRoutes');
 
 const app = express();
 
@@ -13,6 +15,7 @@ app.use(cors({
     credentials:true,
 }));
 
+//MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     console.log("✅ MongoDB Connected Succesfully");
@@ -20,6 +23,10 @@ mongoose.connect(process.env.MONGODB_URI)
 }).catch((err) => {
     console.error("MongoDB Connection Error: ", err);
 });
+
+//Routes
+app.use('/api/users', userRouter);
+app.use('/api/notes', notesRouter);
 
 app.get('/', (req, res) => {
     res.send("Hello World");

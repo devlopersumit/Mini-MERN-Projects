@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./configs/db');
 dotenv.config();
+const taskRoutes = require('./routes/taskRoutes');
 
 const app = express();
 
@@ -12,8 +13,12 @@ app.use(cors());
 //Database Connection
 connectDB();
 
+//routes
+app.use('/api/task', taskRoutes);
+
+// Default route
 app.get('/', (req, res) => {
-    res.send("Hello World!")
+  res.send('Task Tracker API is running...');
 });
 
 app.listen(process.env.PORT ||4444, ()=> {

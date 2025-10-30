@@ -1,13 +1,18 @@
-import React from 'react'
+import AddTaskForm from "./components/AddTaskForm";
+import TaskList from "./components/TaskList";
 
-const App = () => {
+function App() {
   return (
-    <div>
-     <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
+          Todo App
+        </h1>
+        <AddTaskForm />
+        <TaskList />
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

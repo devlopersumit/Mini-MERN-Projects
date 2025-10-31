@@ -65,4 +65,6 @@ const getProfile = (req, res) =>{
     }
 };
 
+module.exports = { signup, login, getProfile};
+
 

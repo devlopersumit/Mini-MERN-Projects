@@ -4,38 +4,45 @@ const User = require('../models/user');
 
 //Register user
 const signup = async (req, res) => {
-    const { userName, email, password } = req.body;
+  const { name, email, password } = req.body;
 
-    try {
-        // 1️⃣ Check if user already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            res.status(400).json({ message: 'User already exist' });
-        }
-        // 2️⃣ Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // 3️⃣ Save the new user
-        const newUser = await User.create({
-            userName,
-            email,
-            password: hashedPassword
-        });
-
-        // 4️⃣ Generate token
-        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
-        // 5️⃣ Return user info + token
-        res.status(200).json({ message: 'user created successfully!', token }, {
-            id: User._id,
-            name: User.userName,
-            email: User.email,
-        },);
-
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+  try {
+    // 1️⃣ Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
     }
+
+    // 2️⃣ Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 3️⃣ Save the new user
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    // 4️⃣ Generate token
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    // 5️⃣ Send response
+    res.status(200).json({
+      message: "User created successfully!",
+      token,
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
+
 
 //Login user
 const login = async (req, res) => {

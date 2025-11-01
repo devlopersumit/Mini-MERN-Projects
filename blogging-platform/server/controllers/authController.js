@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 //Register user
 const signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     // 1️⃣ Check if user already exists
@@ -18,7 +18,7 @@ const signup = async (req, res) => {
 
     // 3️⃣ Save the new user
     const newUser = await User.create({
-      name,
+      username,
       email,
       password: hashedPassword,
     });
@@ -34,7 +34,7 @@ const signup = async (req, res) => {
       token,
       user: {
         id: newUser._id,
-        name: newUser.name,
+        username: newUser.username,
         email: newUser.email,
       },
     });
@@ -51,30 +51,37 @@ const login = async (req, res) => {
     try {
         const user = await User.findOne({ email });
         if (!user) {
-            res.status(400).json({ message: 'user not found' });
+            return res.status(400).json({ message: 'user not found' });
         }
         const isMatchPassword = await bcrypt.compare(password, user.password);
 
         if (!isMatchPassword) {
-            res.status(400).json({ message: 'invalid credentials' });
+            return res.status(400).json({ message: 'invalid credentials' });
         }
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-        res.status(201).json({ message: 'Login succesfully', token });
+        res.status(200).json({ 
+            message: 'Login successfully', 
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+            }
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
 
 //Get Profile
-const getProfile = (req, res) => {
-    try {
-        res.json(req.user);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+ const getProfile = async (req, res) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
-
 module.exports = { signup, login, getProfile };
 
 

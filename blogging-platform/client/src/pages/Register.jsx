@@ -1,17 +1,37 @@
 import { useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { api } from "../api";
 import { AuthContext } from "../context/authContext";
-import { Link } from "react-router-dom";
 
 const Register = () => {
   const { setUser, setToken } = useContext(AuthContext);
   const [form, setForm] = useState({ username: "", email: "", password: "" });
+  const navigate = useNavigate(); 
 
+  // ✅ prevent default form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await api.post("/auth/register", form);
-    setUser(res.data.user);
-    setToken(res.data.token);
+
+    try {
+      const res = await api.post("/auth/register", form);
+
+      if (res.data?.user && res.data?.token) {
+        // ✅ Save user and token in context
+        setUser(res.data.user);
+        setToken(res.data.token);
+
+        // ✅ Clear input fields
+        setForm({ username: "", email: "", password: "" });
+
+        // ✅ Redirect to profile page
+        navigate("/profile");
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Registration failed:", error);
+      alert(error.response?.data?.message || "Registration failed");
+    }
   };
 
   return (
@@ -28,12 +48,12 @@ const Register = () => {
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
                 Username
               </label>
-              <input 
+              <input
                 id="username"
-                name="username" 
+                name="username"
                 type="text"
                 value={form.username}
-                onChange={(e)=>setForm({...form, username:e.target.value})} 
+                onChange={(e) => setForm({ ...form, username: e.target.value })}
                 placeholder="Enter your username"
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
@@ -44,12 +64,12 @@ const Register = () => {
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
-              <input 
+              <input
                 id="email"
-                name="email" 
+                name="email"
                 type="email"
                 value={form.email}
-                onChange={(e)=>setForm({...form, email:e.target.value})} 
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="Enter your email"
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
@@ -60,19 +80,19 @@ const Register = () => {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
-              <input 
+              <input
                 id="password"
-                type="password" 
-                name="password" 
+                type="password"
+                name="password"
                 value={form.password}
-                onChange={(e)=>setForm({...form, password:e.target.value})} 
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
                 placeholder="Create a password"
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
               />
             </div>
 
-            <button 
+            <button
               type="submit"
               className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl"
             >

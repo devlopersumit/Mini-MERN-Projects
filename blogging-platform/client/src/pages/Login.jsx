@@ -1,17 +1,28 @@
 import { useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { api } from "../api";
 import { AuthContext } from "../context/authContext";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const { setUser, setToken } = useContext(AuthContext);
   const [form, setForm] = useState({ email: "", password: "" });
+  const navigate = useNavigate(); // ✅ for navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await api.post("/auth/login", form);
-    setUser(res.data.user);
-    setToken(res.data.token);
+    try {
+      const res = await api.post("/auth/login", form);
+      setUser(res.data.user);
+      setToken(res.data.token);
+
+      // ✅ Clear inputs after successful login
+      setForm({ email: "", password: "" });
+
+      // ✅ Navigate to dashboard (or any page you want)
+      navigate("/profile");
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+    }
   };
 
   return (
@@ -28,12 +39,12 @@ const Login = () => {
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
-              <input 
+              <input
                 id="email"
-                name="email" 
+                name="email"
                 type="email"
                 value={form.email}
-                onChange={(e)=>setForm({...form, email:e.target.value})} 
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="Enter your email"
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
@@ -44,19 +55,19 @@ const Login = () => {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
-              <input 
+              <input
                 id="password"
-                type="password" 
-                name="password" 
+                type="password"
+                name="password"
                 value={form.password}
-                onChange={(e)=>setForm({...form, password:e.target.value})} 
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
                 placeholder="Enter your password"
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
               />
             </div>
-            
-            <button 
+
+            <button
               type="submit"
               className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl"
             >

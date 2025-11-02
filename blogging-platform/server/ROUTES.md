@@ -10,15 +10,15 @@ GET /api/auth/me -> Done
 
 # Posts:
 
-POST /api/posts
+POST /api/posts -> Done
 
-GET /api/posts?limit=&page=&cursor=
+GET /api/posts?limit=&page=&cursor= -> Done
 
-GET /api/posts/:id
+GET /api/posts/:id -> Done
 
-PUT /api/posts/:id
+PUT /api/posts/:id -> Done
 
-DELETE /api/posts/:id
+DELETE /api/posts/:id -> Done
 
 # Uploads:
 

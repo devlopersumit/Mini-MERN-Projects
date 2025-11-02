@@ -1,7 +1,8 @@
 const express = require('express');
 const connectDB = require('./configs/db');
 const cors = require('cors');
-const router = require('./routes/authRoutes');
+const authRouter = require('./routes/authRoutes');
+const postRouter = require('./routes/postRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -12,8 +13,11 @@ app.use(cors())
 //MongoDB Connection
 connectDB();
 
-//Routes
-app.use('/api/auth', router)
+//userRoutes
+app.use('/api/auth', authRouter)
+
+//postRoutes
+app.use('/api', postRouter);
 
 app.get('/', (req, res) => {
     res.send("Hello World!")

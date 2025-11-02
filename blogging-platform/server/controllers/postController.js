@@ -4,13 +4,17 @@ const Post = require("../models/post");
 const createPost = async (req, res) => {
     try{
         const { title, content } = req.body;
+        const imageUrl = req.file?.path; //cloudinary returns URL in req.file.path
 
         if(!req.user) {
             res.status(401).json({message:'Unauthorized'});
         }
 
         const newPost = await Post.create({
-            title, content, author:req.user._id
+            title,
+             content,
+             image:imageUrl,
+             author:req.user._id
         });
 
         res.status(201).json({

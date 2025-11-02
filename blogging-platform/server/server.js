@@ -17,7 +17,7 @@ connectDB();
 app.use('/api/auth', authRouter)
 
 //postRoutes
-app.use('/api', postRouter);
+app.use('/api/posts', postRouter);
 
 app.get('/', (req, res) => {
     res.send("Hello World!")

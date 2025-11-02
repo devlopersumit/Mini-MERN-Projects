@@ -2,11 +2,11 @@
 
 # Auth:
 
-POST /api/auth/register
+POST /api/auth/register -> Done
 
-POST /api/auth/login
+POST /api/auth/login -> Done
 
-GET /api/auth/me
+GET /api/auth/me -> Done
 
 # Posts:
 

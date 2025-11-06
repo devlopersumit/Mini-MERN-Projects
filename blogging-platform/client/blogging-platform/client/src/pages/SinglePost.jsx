@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../api";
-import { AuthContext } from "../context/authContext";
 
 const SinglePost = () => {
     const { id } = useParams();
@@ -13,7 +12,6 @@ const SinglePost = () => {
         date:null
     });
     const navigate = useNavigate();
-    const { token } = useContext(AuthContext)
 
     useEffect(() => {
         const fetchSinglePost = async () => {
@@ -32,9 +30,7 @@ const SinglePost = () => {
 
     const handleDeletePost = async () => {
        try{
-          await api.delete(`/posts/${id}`, {
-            headers:{Authorization:`Bearer ${token}`}
-          });
+          await api.delete(`/posts/${id}`);
           setPost(null);
           navigate('/');
        }catch(err) {
@@ -53,7 +49,7 @@ const SinglePost = () => {
                     {post.date && <p className="text-gray-500 text-sm mb-6">{new Date(post.date).toLocaleDateString()}</p>}
                     <div className="text-gray-800">{post.content}</div>
 
-                    <button onClick={handleDeletePost} className="mt-5 w-16 h-8 rounded-lg bg-blue-700 text-white hover:bg-blue-600 active:bg-blue-800">Delete</button>
+                    <button onClick={handleDeletePost} className="mt-5 w-8 h-8 rounded-lg bg-blue-700 text-white">Delete</button>
                 </div>
             )}
         </div>

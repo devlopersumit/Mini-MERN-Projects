@@ -5,8 +5,6 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Home from './pages/Home'
-import Write from './pages/Write'
-import SinglePost from './pages/SinglePost'
 
 const App = () => {
   return (
@@ -17,8 +15,6 @@ const App = () => {
         <Route path='/signup' element={<Register/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/profile' element={<Profile/>} />
-        <Route path = '/write' element= {<Write/>} />
-        <Route path='/singlepost' element={<SinglePost/>}/>
       </Routes>
       </BrowserRouter>
     </AuthProvider>

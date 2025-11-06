@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
+import { Link } from "react-router-dom";
 
 const Home = () => {
     const[loading, setLoading] = useState(true);
@@ -30,9 +31,9 @@ const Home = () => {
                 <div>
                     {
                         posts.map((post) => (
-                            <div key={post.id}>
+                            <div key={post._id}>
                                 <h2>{post.title}</h2>
-                                <p>{post.content}</p>
+                                <Link to={`/posts/${post._id}`}>Read More...</Link>
                             </div>
                         ))
                     }

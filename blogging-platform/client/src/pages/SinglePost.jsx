@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../api";
 
 const SinglePost = () => {
@@ -11,6 +11,7 @@ const SinglePost = () => {
         author:"",
         date:null
     });
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchSinglePost = async () => {
@@ -26,6 +27,16 @@ const SinglePost = () => {
         
         fetchSinglePost();
     }, [id])
+
+    const handleDeletePost = async () => {
+       try{
+          await api.delete(`/posts/${id}`);
+          setPost(null);
+          navigate('/');
+       }catch(err) {
+        console.log("error occured in deleting post: ", err.message);
+       }
+    }
     
     return (
         <div className="w-full min-h-screen bg-gray-700 p-8">
@@ -37,6 +48,8 @@ const SinglePost = () => {
                     <p className="text-gray-600 mb-4">By {post.author}</p>
                     {post.date && <p className="text-gray-500 text-sm mb-6">{new Date(post.date).toLocaleDateString()}</p>}
                     <div className="text-gray-800">{post.content}</div>
+
+                    <button onClick={handleDeletePost} className="mt-5 w-8 h-8 rounded-lg bg-blue-700 text-white">Delete</button>
                 </div>
             )}
         </div>

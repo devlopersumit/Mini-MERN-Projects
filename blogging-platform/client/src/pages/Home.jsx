@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 const Home = () => {
     const[loading, setLoading] = useState(true);
@@ -22,7 +23,8 @@ const Home = () => {
     },[])
 
     return (
-        <div className="w-full h-screen bg-gray-700">
+        <div className="w-full h-screen bg-slate-300 fixed">
+            <Navbar />
         {
             loading ? (
                 <h3 className="flex justify-center items-center h-screen">Loading...</h3>

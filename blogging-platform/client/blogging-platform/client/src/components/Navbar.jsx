@@ -19,7 +19,7 @@ function Navbar() {
     };
 
     return (
-        <nav className="w-[90%] sm:w-[85%] md:w-[80%] lg:w-1/2 h-auto min-h-[70px] px-6 py-4 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 backdrop-blur-lg bg-opacity-90 rounded-3xl flex flex-col md:flex-row justify-between items-center m-auto text-white shadow-2xl border border-gray-600/50 hover:shadow-blue-500/20 hover:border-blue-500/50 transition-all duration-300">
+        <nav className="w-[90%] sm:w-[85%] md:w-[80%] lg:w-1/2 h-auto min-h-[70px] mt-8 px-6 py-4 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 backdrop-blur-lg bg-opacity-90 rounded-3xl flex flex-col md:flex-row justify-between items-center m-auto text-white shadow-2xl border border-gray-600/50 hover:shadow-blue-500/20 hover:border-blue-500/50 transition-all duration-300">
             
             {/* Logo and Mobile Menu Button */}
             <div className="w-full md:w-auto flex justify-between items-center">

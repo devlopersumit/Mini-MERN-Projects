@@ -3,7 +3,7 @@ import PostCard from "./PostCard";
 function PostList({ posts }) {
     if (!posts || posts.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center py-10">
+            <div className="flex flex-col items-center justify-center py-20">
                 <div className="text-center space-y-4">
                     <div className="text-6xl">📝</div>
                     <h3 className="text-2xl font-bold text-gray-700">No posts yet</h3>

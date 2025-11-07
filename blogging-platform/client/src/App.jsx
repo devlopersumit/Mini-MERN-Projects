@@ -18,7 +18,7 @@ const App = () => {
         <Route path='/login' element={<Login/>} />
         <Route path='/profile' element={<Profile/>} />
         <Route path = '/write' element= {<Write/>} />
-        <Route path='/singlepost' element={<SinglePost/>}/>
+        <Route path='/posts/:id' element={<SinglePost/>}/>
       </Routes>
       </BrowserRouter>
     </AuthProvider>

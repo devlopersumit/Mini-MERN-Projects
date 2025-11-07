@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Calendar, User, ArrowRight } from "lucide-react";
 
 function PostCard({ post }) {
     const formatDate = (date) => {
@@ -29,11 +28,15 @@ function PostCard({ post }) {
                 {/* Meta Information */}
                 <div className="flex flex-wrap gap-4 text-sm text-gray-400">
                     <div className="flex items-center gap-2">
-                        <User size={16} className="text-purple-400" />
+                        <svg className="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
                         <span>{post.author || "Anonymous"}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <Calendar size={16} className="text-blue-400" />
+                        <svg className="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
                         <span>{formatDate(post.date || post.createdAt)}</span>
                     </div>
                 </div>
@@ -49,10 +52,14 @@ function PostCard({ post }) {
                     className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-semibold group/link transition-all duration-200"
                 >
                     <span>Read More</span>
-                    <ArrowRight 
-                        size={18} 
-                        className="group-hover/link:translate-x-1 transition-transform duration-200" 
-                    />
+                    <svg 
+                        className="w-5 h-5 group-hover/link:translate-x-1 transition-transform duration-200" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
                 </Link>
             </div>
 

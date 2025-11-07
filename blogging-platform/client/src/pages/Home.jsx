@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
-import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
+import PostList from "../components/PostList";
 
 const Home = () => {
     const[loading, setLoading] = useState(true);
@@ -23,25 +24,19 @@ const Home = () => {
     },[])
 
     return (
-        <div className="w-full h-screen bg-slate-300 fixed">
+        <div className="w-full min-h-screen bg-gradient-to-br from-slate-100 to-slate-300 pt-8">
             <Navbar />
-        {
-            loading ? (
-                <h3 className="flex justify-center items-center h-screen">Loading...</h3>
-            ):
-            (
-                <div>
-                    {
-                        posts.map((post) => (
-                            <div key={post._id}>
-                                <h2>{post.title}</h2>
-                                <Link to={`/posts/${post._id}`}>Read More...</Link>
-                            </div>
-                        ))
-                    }
+            <Hero />
+            {loading ? (
+                <div className="flex justify-center items-center py-20">
+                    <div className="text-center space-y-4">
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mx-auto"></div>
+                        <h3 className="text-xl font-semibold text-gray-700">Loading posts...</h3>
+                    </div>
                 </div>
-            )
-        }  
+            ) : (
+                <PostList posts={posts} />
+            )}
         </div>
     )
 }
